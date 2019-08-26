@@ -1001,6 +1001,7 @@ declare module 'react-navigation' {
     renderIcon: (scene: DrawerScene) => React.ReactNode;
     onItemPress: (info: DrawerItem) => void;
     itemsContainerStyle?: StyleProp<ViewStyle>;
+    shouldOpenOffsetX?: number;
     itemStyle?: StyleProp<ViewStyle>;
     labelStyle?: StyleProp<TextStyle>;
     activeLabelStyle?: StyleProp<TextStyle>;

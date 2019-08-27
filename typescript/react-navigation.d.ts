@@ -124,7 +124,7 @@ declare module 'react-navigation' {
     routes: NavigationRoute[];
     isTransitioning: boolean;
     key: string;
-    params: NavigationParams | undefined;
+    params: NavigationParams;
   }
 
   export interface DrawerNavigationState extends NavigationState {
@@ -244,7 +244,7 @@ declare module 'react-navigation' {
     | Options
     | ((
         navigationOptionsContainer: NavigationScreenConfigProps & {
-          navigationOptions: NavigationScreenConfig<Options>;
+          navigationOptions: NavigationScreenProp<NavigationRoute>;
         }
       ) => Options);
 
@@ -476,7 +476,6 @@ declare module 'react-navigation' {
     headerTitle?: string | React.ReactElement<any>;
     headerTitleStyle?: StyleProp<TextStyle>;
     headerTitleAllowFontScaling?: boolean;
-    headerTitleContainerStyle?: StyleProp<TextStyle>;
     headerTintColor?: string;
     headerLeft?:
       | React.ReactElement<any>
@@ -531,14 +530,11 @@ declare module 'react-navigation' {
     | NavigationCloseDrawerAction
     | NavigationToggleDrawerAction;
 
-  export type NavigationSwitchAction = NavigationJumpToAction;
-
   export type NavigationAction =
     | NavigationInitAction
     | NavigationStackAction
     | NavigationTabAction
-    | NavigationDrawerAction
-    | NavigationSwitchAction;
+    | NavigationDrawerAction;
 
   export type NavigationRouteConfig =
     | NavigationComponent
@@ -753,11 +749,9 @@ declare module 'react-navigation' {
       params?: NavigationParams,
       action?: NavigationNavigateAction
     ) => boolean;
-    reset: (actions: NavigationAction[], index: number) => boolean;
     pop: (n?: number, params?: { immediate?: boolean }) => boolean;
     popToTop: (params?: { immediate?: boolean }) => boolean;
     isFocused: () => boolean;
-    isFirstRouteInParent: () => boolean;
     router?: NavigationRouter;
     dangerouslyGetParent: () => NavigationScreenProp<S> | undefined;
   }
@@ -1001,7 +995,6 @@ declare module 'react-navigation' {
     renderIcon: (scene: DrawerScene) => React.ReactNode;
     onItemPress: (info: DrawerItem) => void;
     itemsContainerStyle?: StyleProp<ViewStyle>;
-    shouldOpenOffsetX?: number;
     itemStyle?: StyleProp<ViewStyle>;
     labelStyle?: StyleProp<TextStyle>;
     activeLabelStyle?: StyleProp<TextStyle>;
@@ -1043,13 +1036,12 @@ declare module 'react-navigation' {
       style?: StyleProp<ViewStyle>;
       labelStyle?: StyleProp<TextStyle>;
     };
-    shouldOpenOffsetX?: number;
     drawerType?: 'front' | 'back' | 'slide';
     drawerLockMode?: DrawerLockMode;
     edgeWidth?: number;
+    shouldOpenOffsetX?: number;
     hideStatusBar?: boolean;
     overlayColor?: string;
-    unmountInactiveRoutes?: boolean;
   }
 
   export function DrawerNavigator(
@@ -1088,7 +1080,6 @@ declare module 'react-navigation' {
       scrollEnabled?: boolean;
       tabStyle?: StyleProp<ViewStyle>;
       indicatorStyle?: StyleProp<ViewStyle>;
-      keyboardHidesTabBar?: boolean;
     };
     swipeEnabled?: boolean;
     animationEnabled?: boolean;
@@ -1235,7 +1226,7 @@ declare module 'react-navigation' {
 
     function pop(options: NavigationPopActionPayload): NavigationPopAction;
     function popToTop(
-      options?: NavigationPopToTopActionPayload
+      options: NavigationPopToTopActionPayload
     ): NavigationPopToTopAction;
 
     function push(options: NavigationPushActionPayload): NavigationPushAction;
@@ -1404,7 +1395,6 @@ declare module 'react-navigation' {
     truncatedTitle?: string;
     width?: number;
     disabled?: boolean;
-    backTitleVisible?: boolean;
   }
 
   export const HeaderBackButton: React.ComponentClass<HeaderBackButtonProps>;
